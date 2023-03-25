@@ -1,22 +1,48 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-from .models import Prompt
+from .models import Prompt, Image
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'groups']
+        fields = (
+            'url', 'id',
+            'username',
+            'email',
+            'groups',
+        )
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ['url', 'name']
+        fields = (
+            'url', 'id',
+            'name',
+        )
+
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = (
+            'id',
+            'data',
+        )
 
 
 class PromptSerializer(serializers.HyperlinkedModelSerializer):
+    images = ImageSerializer(many=True, required=False)
+
     class Meta:
         model = Prompt
-        fields = ['url', 'user', 'created', 'prompt', 'method']
+        fields = (
+            'url', 'id',
+            'user',
+            'created',
+            'prompt',
+            'method',
+            'images',
+        )

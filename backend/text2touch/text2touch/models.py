@@ -16,3 +16,12 @@ class Prompt(models.Model):
 
     def __str__(self):
         return '"{}"'.format(self.prompt)
+
+
+class Image(models.Model):
+    prompt = models.ForeignKey(Prompt, on_delete=models.CASCADE, related_name='images')
+
+    data = models.TextField()
+
+    def __str__(self):
+        return '{} <{}>'.format(self.prompt, self.id)
