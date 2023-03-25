@@ -3,6 +3,7 @@ from rest_framework import viewsets, permissions
 
 from .models import Prompt
 from .serializers import UserSerializer, GroupSerializer, PromptSerializer
+from .services.dalle2 import OpenAIService
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -30,3 +31,18 @@ class PromptViewSet(viewsets.ModelViewSet):
     queryset = Prompt.objects.all()
     serializer_class = PromptSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        method = serializer.validated_data['method']
+        prompt = serializer.validated_data['prompt']
+
+        if method == 'GPT3':
+            print('TODO: call GPT3 for SVGs')
+        elif method == 'DALLE2':
+            print('TODO: call DALLE2 for PNGs')
+            pngs = OpenAIService.generate(prompt)
+            print(pngs)
+
+            print('TODO: convert PNGs to SVGs')
+
+        super().perform_create(serializer)
