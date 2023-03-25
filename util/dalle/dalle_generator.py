@@ -1,4 +1,4 @@
-# create.py
+# dalle_generator.py
 
 import json
 import os
@@ -9,13 +9,13 @@ import openai
 
 def d_generate():
     PROMPT = "An eco-friendly computer from the 90s in the style of vaporwave"
+    # PROMPT = input(); 
     DATA_DIR = Path.cwd() / "responses"
 
     DATA_DIR.mkdir(exist_ok=True)
 
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
-    #openai.api_key = "sk-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"
 
     response = openai.Image.create(
         prompt=PROMPT,
@@ -34,4 +34,4 @@ def d_generate():
 
 if __name__ == '__main__':
     # call create func
-    print(create_func())
+    print(d_generate())
