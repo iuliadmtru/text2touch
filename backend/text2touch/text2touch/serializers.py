@@ -19,4 +19,4 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class PromptSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Prompt
-        fields = ['user', 'prompt']
+        fields = ['url', 'user', 'created', 'prompt', 'method']

@@ -4,6 +4,15 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Prompt(models.Model):
+    class Method(models.TextChoices):
+        GPT3 = 'GPT3', _('GPT-3'),
+        DALLE2 = 'DALLE2', _('DALL·E 2'),
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='prompts')
 
     prompt = models.CharField(_('prompt'), max_length=64)
+    method = models.CharField(_('method'), max_length=8, choices=Method.choices)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '"{}"'.format(self.prompt)
