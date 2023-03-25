@@ -15,13 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
 
-from text2touch.views import UserViewSet, GroupViewSet
-
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'groups', GroupViewSet)
+from .text2touch import urls
 
 urlpatterns = [
     # Django Admin
@@ -29,5 +24,7 @@ urlpatterns = [
 
     # Django Rest Framework
     path(r'api/auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path(r'api/', include(router.urls)),
+
+    # Our app
+    path(r'', include(urls.urlpatterns)),
 ]
