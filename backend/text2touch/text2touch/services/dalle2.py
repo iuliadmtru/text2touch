@@ -12,7 +12,7 @@ class OpenAIService:
         # call DALL·E 2 to generate images
         response = openai.Image.create(
             prompt=prompt,
-            n=4,
+            n=1,
             size="256x256",
             response_format="b64_json",
         )

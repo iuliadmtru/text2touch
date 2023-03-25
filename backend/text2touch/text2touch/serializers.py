@@ -34,7 +34,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class PromptSerializer(serializers.HyperlinkedModelSerializer):
-    images = ImageSerializer(many=True, required=False)
+    images = ImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Prompt

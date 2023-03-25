@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import viewsets, permissions
 
-from .models import Prompt
+from .models import Prompt, Image
 from .serializers import UserSerializer, GroupSerializer, PromptSerializer
 from .services.dalle2 import OpenAIService
 
@@ -33,16 +33,13 @@ class PromptViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
-        method = serializer.validated_data['method']
-        prompt = serializer.validated_data['prompt']
-
-        if method == 'GPT3':
-            print('TODO: call GPT3 for SVGs')
-        elif method == 'DALLE2':
-            print('TODO: call DALLE2 for PNGs')
-            pngs = OpenAIService.generate(prompt)
-            print(pngs)
-
-            print('TODO: convert PNGs to SVGs')
-
         super().perform_create(serializer)
+        instance = serializer.instance
+
+        if instance.method == 'GPT3':
+            print('TODO: call GPT3 for SVGs')
+        elif instance.method == 'DALLE2':
+            pngs = OpenAIService.generate(instance.prompt)
+            for img in pngs:
+                print('TODO: convert PNG to SVG')
+                Image.objects.create(prompt=instance, data=img)
