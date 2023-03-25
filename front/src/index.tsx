@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Dashboard } from './components/Dashboard';
 import { AppHeader } from './components/AppHeader';
+import { MySelect } from './components/Select';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,6 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Dashboard />
+    {/* <MySelect /> */}
     {/* <AppHeader /> */}
   </React.StrictMode>
 );
