@@ -6,7 +6,9 @@ export const AppHeader = () => {
     <Grid container>
       <Grid container item xs={12} style={{ padding: 10 }} alignItems="center ">
         {/* TODO make image high res */}
-        <img src={logo} alt="Tactile Logo"/>
+        <a href="https://tactileimages.org/en/home/">
+          <img src={logo} alt="Tactile Logo" />
+        </a>
       </Grid>
       <Grid item xs={12}>
         <Divider />
