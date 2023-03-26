@@ -156,5 +156,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ###
 
 OPENAI = {
-    'API_KEY': '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',
+    'API_KEY': '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',
 }

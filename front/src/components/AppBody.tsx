@@ -159,7 +159,7 @@ export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImage
                   "method": selectedEngine
                 })
               }
-              console.log(requestBody);
+              // console.log(requestBody);
               fetch(API_URL + "/api/prompts/", requestBody).then(data => data.json()).then(json => {setImages(json.images)});
             }}
           >
