@@ -3,7 +3,7 @@ FROM python:3.10-alpine
 WORKDIR /app/
 
 # dependencies
-RUN #apk add postgresql-dev
+#RUN apk add postgresql-dev
 
 ADD requirements.txt ./
 RUN pip install -r requirements.txt
@@ -22,7 +22,7 @@ ADD db.sqlite3 ./
 
 EXPOSE 80
 CMD ./manage.py migrate &&  \
-    gunicorn comet.wsgi:application  \
+    gunicorn text2touch.wsgi:application  \
         --bind=0.0.0.0:80  \
         --workers=3  \
         --access-logfile -

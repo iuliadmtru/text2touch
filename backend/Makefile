@@ -34,11 +34,12 @@ deploy: .build .deploy
 	else  \
 		docker build . -t $(IMAGE);  \
 	fi &&  \
-	echo "\n""built image with version '$(VERSION)'; pushing to ECR...\n" &&  \
-	AWS_PROFILE=comet aws ecr get-login-password --region eu-central-1  \
-		| docker login --username AWS --password-stdin $(ECR_ENDPOINT) &&  \
-	docker push $(IMAGE) &&  \
-	echo "\n""pushed image with version '$(VERSION)'.\n"
+	echo "\n""built image with version '$(VERSION)'"
+# 	echo "\n""built image with version '$(VERSION)'; pushing to ECR...\n" &&  \
+# 	AWS_PROFILE=comet aws ecr get-login-password --region eu-central-1  \
+# 		| docker login --username AWS --password-stdin $(ECR_ENDPOINT) &&  \
+# 	docker push $(IMAGE) &&  \
+# 	echo "\n""pushed image with version '$(VERSION)'.\n"
 
 .PHONY: .deploy
 .deploy: .init-infra
