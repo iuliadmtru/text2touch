@@ -66,7 +66,6 @@ export const LoginPage = () => {
             if (userEmail === "" || userPassword === "") {
               setSuccessLogin(false);
             } else {
-              console.log(userEmail);
               const base64encodedData = Buffer.from(
                 `${userEmail}:${userPassword}`
               ).toString("base64");
@@ -77,13 +76,8 @@ export const LoginPage = () => {
                   'Content-Type': 'application/json',
                   'Authorization': 'Basic ' + base64encodedData
                 },
-              }).then((res) => {
-                console.log(res);
-                if (res.ok !== true) {
-                  setSuccessLogin(false);
-                }
-              })
-              .then((json) => console.log(json));
+              }).then((res) => {res.json()})
+              .then((json) => console.log(json)).catch(error => setSuccessLogin(false));
             }
           }}
         >
