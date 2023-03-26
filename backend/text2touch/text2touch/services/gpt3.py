@@ -26,7 +26,7 @@ class GPT3Service:
         the guidelines of a tactile image. Use curves for the image, not just simple shapes. \
         The code should have at least 30 lines. Explain the code with comments.\
         \
-        My request is: Generate a black and white, clipart style, detailed contour of {} {}".format(prompt, pov)
+        My request is: Generate a black and white, clipart style, detailed {} outline of a {}.".format(pov, prompt)
 
         # call GPT-3 to generate SVG images
         response = openai.Completion.create(
