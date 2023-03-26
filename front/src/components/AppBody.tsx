@@ -245,6 +245,7 @@ export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImage
               </Button>
               <Button
                 onClick={() => {
+                  window.open("https://editor.tactileimages.org/draw#import_" + prompt, "_blank");
                 }}
                 style={{
                   borderColor: "#47E5BC",
