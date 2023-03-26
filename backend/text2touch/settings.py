@@ -24,20 +24,22 @@ SECRET_KEY = 'django-insecure-i4q(amoc%w7qqo&%amt&ekto)kn_ec&n#fu0&4dx_-e%_1kes8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+FRONTEND_URL = 'http://localhost:3000'
+API_URL = 'http://localhost:8000'
+
 ALLOWED_HOSTS = [
     '*',
 ]
 
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost',
-    'http://127.0.0.1',
+    API_URL,
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost',
-    'http://127.0.0.1',
+    FRONTEND_URL,
+    API_URL,
 ]
 
 # Application definition
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
@@ -73,7 +76,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ]
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        # TODO: should this be just DjangoModelPermissions?
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
 }
 
 TEMPLATES = [
