@@ -76,8 +76,12 @@ export const LoginPage = () => {
                   'Content-Type': 'application/json',
                   'Authorization': 'Basic ' + base64encodedData
                 },
-              }).then((res) => {res.json()})
-              .then((json) => console.log(json)).catch(error => setSuccessLogin(false));
+              }).then(res => res.json())
+              .then(json => {
+                localStorage.setItem("user", json[0].username);
+                localStorage.setItem("password", userPassword);
+                navigate("/dashboard");
+              }).catch(error => setSuccessLogin(false));
             }
           }}
         >

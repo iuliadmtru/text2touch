@@ -11,6 +11,9 @@ const root = ReactDOM.createRoot(
 );
 const router = createBrowserRouter([
   {
+    path: "/",
+   element: <LoginPage /> 
+  }, {
     path: "/dashboard",
     element: <Dashboard />,
   },
