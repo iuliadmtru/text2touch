@@ -1,9 +1,12 @@
+import base64
+import subprocess
+
 import openai
 
 from text2touch import settings
 
 
-class OpenAIService:
+class DALLE2Service:
     @staticmethod
     def generate(prompt):
         # set OpenAI API key
@@ -24,4 +27,17 @@ class OpenAIService:
         # with open(file_name, mode="w", encoding="utf-8") as file:
         #     json.dump(response, file)
 
-        return [data["b64_json"] for data in response["data"]]
+        return [DALLE2Service.png2svg(data["b64_json"]) for data in response["data"]]
+
+    @staticmethod
+    def png2svg(png):
+        bs = base64.b64decode(png.encode())
+        with open('tmp/input.png', 'wb') as f:
+            f.write(bs)
+
+        cmd = ['vtracer', '-i', 'tmp/input.png', '-o', 'tmp/output.svg']
+        process = subprocess.Popen(cmd)
+        process.wait()
+
+        with open('tmp/output.svg', 'rb') as f:
+            return base64.b64encode(f.read()).decode()

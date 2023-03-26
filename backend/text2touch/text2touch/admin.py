@@ -19,7 +19,7 @@ class ImageInline(admin.StackedInline):
 
     @admin.display(description=_('Preview'))
     def preview(self, image):
-        return format_html('<img src="data:image/png;base64,{}" />', image.data)
+        return format_html('<img src="data:image/svg+xml;base64,{}" />', image.data)
 
 
 @admin.register(Prompt)
