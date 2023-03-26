@@ -65,7 +65,7 @@ export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImage
       >
         <Grid item xs={4}>
           <TextField
-            onChange={(event) => {setPrompt(event.target.value); console.log(prompt)}}
+            onChange={(event) => {setPrompt(event.target.value);}}
 
             id="standard-basic"
             label="Describe your image"
@@ -150,18 +150,17 @@ export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImage
               const requestBody = {
                 method: "POST",
                 headers: {
-                  "Content-Type" : "application/json",
-                  "Authorization" : "Basic " + base64encodedData
+                  'Content-Type' : 'application/json',
+                  'Authorization' : 'Basic ' + base64encodedData
                 },
-                payload: {
-                  user: username,
-                  prompt: prompt + perspective,
-                  method: selectedEngine
-                }
+                body: JSON.stringify({
+                  "user": localStorage.getItem("url"),
+                  "prompt": prompt,
+                  "method": selectedEngine
+                })
               }
               console.log(requestBody);
-              fetch(API_URL + "/api/prompt", requestBody).then(data => data.json).then(json => {console.log(json)});
-
+              fetch(API_URL + "/api/prompts/", requestBody).then(data => data.json()).then(json => {setImages(json.images)});
             }}
           >
             Create image
@@ -246,7 +245,6 @@ export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImage
               </Button>
               <Button
                 onClick={() => {
-                  console.log("edit");
                 }}
                 style={{
                   borderColor: "#47E5BC",

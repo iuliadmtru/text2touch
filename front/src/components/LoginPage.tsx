@@ -78,8 +78,10 @@ export const LoginPage = () => {
                 },
               }).then(res => res.json())
               .then(json => {
+                console.log(json);
                 localStorage.setItem("user", json[0].username);
                 localStorage.setItem("password", userPassword);
+                localStorage.setItem("url", json[0].url)
                 navigate("/dashboard");
               }).catch(error => setSuccessLogin(false));
             }
