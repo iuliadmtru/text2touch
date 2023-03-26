@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import ListItem from "@mui/material/ListItem";
+import { useNavigate } from "react-router-dom";
 
 type AppDrawerProps = {
   drawerState: boolean;
@@ -34,6 +35,8 @@ export const AppDrawer: React.FunctionComponent<AppDrawerProps> = ({
       setDrawerState(open);
     };
 
+    const navigate = useNavigate();
+
   return (
     <Drawer anchor="left" open={drawerState} onClose={toggleDrawer(false)}>
       <List style={{ minWidth: 200 }}>
@@ -42,12 +45,12 @@ export const AppDrawer: React.FunctionComponent<AppDrawerProps> = ({
         </ListItem>
         <Divider />
         {sessions.length > 0 ? (
-          sessions.map((session) => {
+          sessions.map((session, index) => {
             
               console.log(session);
             
             return (
-              <ListItem key={session.prompt}>
+              <ListItem key={index}>
                 <ListItemButton onClick={() => {setCurrentSession(session)}}>
                   <ListItemText primary={session.prompt} />
                 </ListItemButton>
@@ -59,7 +62,11 @@ export const AppDrawer: React.FunctionComponent<AppDrawerProps> = ({
         )}
         <Divider />
         <ListItem style={{ marginTop: 40 }}>
-          <ListItemButton>
+          <ListItemButton onClick={() => {
+              localStorage.clear();
+              navigate("/");
+          }
+          }>
             <ListItemText primary="Log out" />
           </ListItemButton>
         </ListItem>

@@ -17,6 +17,9 @@ import {
 import { saveAs } from "file-saver";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { API_URL } from "./constants";
+import { Buffer } from "buffer";
+
 
 interface img {
   data: string,
@@ -29,12 +32,14 @@ type AppBodyProps = {
 }
 
 export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImages}) => {
-  const [perspective, setPerspective] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(-1);
-
+  
   const [dataArrived, setDataArrived] = useState(true);
+  
+  const perspectives = ["front", "lateral"];
+  const [perspective, setPerspective] = useState("");
 
-  const perspectives = ["front", "left", "right", "back"];
+  const [prompt, setPrompt] = useState("");
 
   const engines = ["GPT3", "DALLE2"];
   const [selectedEngine, setSelectedEngine] = useState("");
@@ -60,6 +65,8 @@ export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImage
       >
         <Grid item xs={4}>
           <TextField
+            onChange={(event) => {setPrompt(event.target.value); console.log(prompt)}}
+
             id="standard-basic"
             label="Describe your image"
             variant="standard"
@@ -132,6 +139,29 @@ export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImage
               setDataArrived(false);
               setImages([]);
               setSelectedIndex(-1);
+              
+              const username = localStorage.getItem("user");
+              const pass = localStorage.getItem("password");
+
+              const base64encodedData = Buffer.from(
+                `${username}:${pass}`
+              ).toString("base64");
+                
+              const requestBody = {
+                method: "POST",
+                headers: {
+                  "Content-Type" : "application/json",
+                  "Authorization" : "Basic " + base64encodedData
+                },
+                payload: {
+                  user: username,
+                  prompt: prompt + perspective,
+                  method: selectedEngine
+                }
+              }
+              console.log(requestBody);
+              fetch(API_URL + "/api/prompt", requestBody).then(data => data.json).then(json => {console.log(json)});
+
             }}
           >
             Create image
@@ -147,9 +177,6 @@ export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImage
         style={{ padding: 100 }}
       >
         {images.map((image, index) => {
-          console.log("AAAAAAAAAAAAA");
-          console.log(image)
-          console.log("AAAAAAAAAAAAA");
           return (
           <Grid
             item
