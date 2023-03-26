@@ -34,14 +34,14 @@ ALLOWED_HOSTS = [
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
     API_URL,
-    'https://text2touch.azurewebsites.net:8000',
+    'https://text2touch.azurewebsites.net',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     FRONTEND_URL,
     API_URL,
-    'https://text2touch.azurewebsites.net:8000',
+    'https://text2touch.azurewebsites.net',
 ]
 
 # Application definition
