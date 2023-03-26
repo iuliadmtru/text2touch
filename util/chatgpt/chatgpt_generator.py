@@ -21,7 +21,7 @@ initial_prompt = "We are running an experiment in which you will pretend \
 # user_prompt = "dog, side view, black and white, outline, clipart, simple"
 
 # Note: you need to be using OpenAI Python v0.27.0 for the code below to work
-def prompt_to_code(prompt):
+def prompt_to_png(prompt):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
