@@ -48,5 +48,6 @@ class PromptViewSet(viewsets.ModelViewSet):
         elif instance.method == 'DALLE2':
             imgs = DALLE2Service.generate(instance.prompt)
 
+        print(imgs)
         for img in imgs:
             Image.objects.create(prompt=instance, data=img)
