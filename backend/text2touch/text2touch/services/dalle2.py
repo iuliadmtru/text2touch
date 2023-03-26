@@ -35,7 +35,7 @@ class DALLE2Service:
         with open('./tmp/input.png', 'wb') as f:
             f.write(bs)
 
-        cmd = ['./bin/vtracer-linux', '-i', './tmp/input.png', '-o', './tmp/output.svg']
+        cmd = ['vtracer', '-i', './tmp/input.png', '-o', './tmp/output.svg']
         process = subprocess.Popen(cmd)
         process.wait()
 

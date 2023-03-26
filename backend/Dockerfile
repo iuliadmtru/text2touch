@@ -21,7 +21,7 @@ RUN ./manage.py collectstatic
 ADD db.sqlite3 ./
 
 # vtracer
-ADD bin/ ./bin/
+ADD bin/vtracer-linux /usr/local/bin/vtracer
 RUN mkdir tmp/
 
 EXPOSE 80
