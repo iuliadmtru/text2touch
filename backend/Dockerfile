@@ -20,6 +20,10 @@ RUN ./manage.py collectstatic
 # local database
 ADD db.sqlite3 ./
 
+# vtracer
+ADD vendor/vtracer-linux /usr/local/bin/vtracer
+ADD tmp/ ./tmp/
+
 EXPOSE 80
 CMD ./manage.py migrate &&  \
     gunicorn text2touch.wsgi:application  \

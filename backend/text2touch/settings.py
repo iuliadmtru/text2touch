@@ -34,12 +34,14 @@ ALLOWED_HOSTS = [
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
     API_URL,
+    'https://text2touch.azurewebsites.net:8000',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     FRONTEND_URL,
     API_URL,
+    'https://text2touch.azurewebsites.net:8000',
 ]
 
 # Application definition
@@ -154,5 +156,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ###
 
 OPENAI = {
-    'API_KEY': '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',
+    'API_KEY': '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',
 }
