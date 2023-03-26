@@ -71,12 +71,11 @@ export const LoginPage = () => {
                 `${userEmail}:${userPassword}`
               ).toString("base64");
 
-              fetch(API_URL + "/api/prompts", {
+              fetch(API_URL + "/api/users", {
                 method: "GET",
-                mode: "no-cors",
                 headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Basic ${base64encodedData}`,
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Basic ' + base64encodedData
                 },
               }).then((res) => {
                 console.log(res);
