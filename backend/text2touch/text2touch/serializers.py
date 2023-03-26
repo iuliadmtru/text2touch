@@ -43,6 +43,7 @@ class PromptSerializer(serializers.HyperlinkedModelSerializer):
             'user',
             'created',
             'prompt',
+            'pov',
             'method',
             'images',
         )

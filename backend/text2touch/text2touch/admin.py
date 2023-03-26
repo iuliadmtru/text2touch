@@ -24,7 +24,7 @@ class ImageInline(admin.StackedInline):
 
 @admin.register(Prompt)
 class PromptAdmin(admin.ModelAdmin):
-    list_display = ('prompt', 'method', 'created', 'user')
+    list_display = ('prompt', 'pov', 'method', 'created', 'user')
     list_filter = ('method',)
 
     search_fields = ('prompt', 'user__username', 'user__email')
@@ -33,9 +33,10 @@ class PromptAdmin(admin.ModelAdmin):
         'user',
         'created',
         'prompt',
+        'pov',
         'method',
     )
-    readonly_fields = ('user', 'created', 'prompt', 'method')
+    readonly_fields = ('user', 'created', 'prompt', 'pov', 'method')
 
     inlines = (
         ImageInline,

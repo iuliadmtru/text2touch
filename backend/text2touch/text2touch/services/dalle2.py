@@ -8,14 +8,14 @@ from text2touch import settings
 
 class DALLE2Service:
     @staticmethod
-    def generate(prompt):
+    def generate(prompt, pov):
         # set OpenAI API key
         openai.api_key = settings.OPENAI['API_KEY']
 
         # call DALL·E 2 to generate images
         response = openai.Image.create(
-            prompt=prompt,
-            n=1,
+            prompt="Generate a complete, zoomed out, black and white {} outline of {}".format(pov, prompt),
+            n=4,
             size="256x256",
             response_format="b64_json",
         )
