@@ -44,9 +44,9 @@ class PromptViewSet(viewsets.ModelViewSet):
 
         imgs = None
         if instance.method == 'GPT3':
-            imgs = GPT3Service.generate(instance.prompt)
+            imgs = GPT3Service.generate(instance.prompt, instance.pov)
         elif instance.method == 'DALLE2':
-            imgs = DALLE2Service.generate(instance.prompt)
+            imgs = DALLE2Service.generate(instance.prompt, instance.pov)
 
         print(imgs)
         for img in imgs:
