@@ -4,32 +4,31 @@ import {
   ButtonGroup,
   Card,
   CardActionArea,
-  CardMedia,
-  Chip,
   CircularProgress,
-  createTheme,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Select,
   SelectChangeEvent,
-  Stack,
   TextField,
 } from "@mui/material";
 // import saveAs from "file-saver";
 import { saveAs } from "file-saver";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import test1 from "../imgs/test1.jpg";
-import test2 from "../imgs/test2.jpg";
-import test3 from "../imgs/test3.jpg";
-import test4 from "../imgs/this_svg.svg";
+import { useEffect, useState } from "react";
 
-export const AppBody = () => {
-  const [images, setImages] = useState([test1, test2, test3, test4]);
-  const [selected, setSelected] = useState([false, false, false, false]);
+interface img {
+  data: string,
+  id: number
+}
+
+type AppBodyProps = {
+  images: img[],
+  setImages: any
+}
+
+export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImages}) => {
   const [perspective, setPerspective] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
@@ -43,6 +42,12 @@ export const AppBody = () => {
   const handleChange = (event: SelectChangeEvent) => {
     setPerspective(event.target.value as string);
   };
+
+  useEffect(() => { 
+    if (images.length > 0)
+      setDataArrived(true);
+    setSelectedIndex(-1);
+  }, [images])
 
   return (
     <Grid container direction={"column"} spacing={3}>
@@ -106,7 +111,7 @@ export const AppBody = () => {
         </Grid>
       </Grid>
       <Grid container item justifyContent="center">
-        {!dataArrived ? (
+        {!dataArrived && images.length === 0 ? (
           <CircularProgress
             style={{
               padding: "15px",
@@ -126,7 +131,6 @@ export const AppBody = () => {
             onClick={() => {
               setDataArrived(false);
               setImages([]);
-              setSelected([]);
               setSelectedIndex(-1);
             }}
           >
@@ -142,7 +146,11 @@ export const AppBody = () => {
         spacing={10}
         style={{ padding: 100 }}
       >
-        {images.map((image, index) => (
+        {images.map((image, index) => {
+          console.log("AAAAAAAAAAAAA");
+          console.log(image)
+          console.log("AAAAAAAAAAAAA");
+          return (
           <Grid
             item
             container
@@ -157,7 +165,7 @@ export const AppBody = () => {
             >
               <Card
                 sx={
-                  selected[index]
+                  index === selectedIndex
                     ? {
                         maxHeight: 600,
                         borderColor: "#47E5BC",
@@ -169,32 +177,26 @@ export const AppBody = () => {
               >
                 <CardActionArea
                   onClick={() => {
-                    const newSelected = [...selected];
-                    newSelected.map((item, index1) =>
-                      index1 === index
-                        ? (newSelected[index1] = !newSelected[index1])
-                        : (newSelected[index1] = false)
+                    images.map((item, index1) =>
+                      {if (index1 === selectedIndex)
+                        setSelectedIndex(-1)
+                        else
+                      setSelectedIndex(index1)
+                      }
                     );
-                    setSelected(newSelected);
-                    // it can be a problem
-                    setSelectedIndex(index);
                   }}
                 >
-                  <CardMedia
-                    component="img"
-                    alt="test"
-                    height="100%"
-                    width="100%"
-                    image={image}
-                  />
+                  <img height={"100%"} width={"100%"} src={"data:image/svg+xml;base64," + image.data} alt={index + ""} />
                 </CardActionArea>
               </Card>
             </motion.div>
           </Grid>
-        ))}
+        )
+                }
+        )}
       </Grid>
       <Grid container item justifyContent="center" alignItems="flex-start">
-        {selected.filter((item) => item === true).length !== 0 && (
+        {selectedIndex !== -1 && (
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -203,7 +205,7 @@ export const AppBody = () => {
             <ButtonGroup size="large">
               <Button
                 onClick={() => {
-                  saveAs(images[selectedIndex], "image.svg");
+                  saveAs("data:image/svg+xml;base64," + images[selectedIndex].data, "image.svg");
                 }}
                 style={{
                   borderColor: "#47E5BC",
