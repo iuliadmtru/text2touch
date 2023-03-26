@@ -1,7 +1,8 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { colorPallette } from "./constants";
+import { API_URL, colorPallette } from "./constants";
+import { Buffer } from "buffer";
 
 export const LoginPage = () => {
   const [userEmail, setUserEmail] = useState("");
@@ -62,7 +63,29 @@ export const LoginPage = () => {
           variant="contained"
           style={{ backgroundColor: colorPallette.cyan }}
           onClick={() => {
-            console.log(userEmail);
+            if (userEmail === "" || userPassword === "") {
+              setSuccessLogin(false);
+            } else {
+              console.log(userEmail);
+              const base64encodedData = Buffer.from(
+                `${userEmail}:${userPassword}`
+              ).toString("base64");
+
+              fetch(API_URL + "/api/prompts", {
+                method: "GET",
+                mode: "no-cors",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Basic ${base64encodedData}`,
+                },
+              }).then((res) => {
+                console.log(res);
+                if (res.ok !== true) {
+                  setSuccessLogin(false);
+                }
+              })
+              .then((json) => console.log(json));
+            }
           }}
         >
           {" "}
