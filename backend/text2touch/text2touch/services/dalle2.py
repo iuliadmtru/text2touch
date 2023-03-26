@@ -32,12 +32,12 @@ class DALLE2Service:
     @staticmethod
     def png2svg(png):
         bs = base64.b64decode(png.encode())
-        with open('/app/tmp/input.png', 'wb') as f:
+        with open('./tmp/input.png', 'wb') as f:
             f.write(bs)
 
-        cmd = ['/app/bin/vtracer-linux', '-i', '/app/tmp/input.png', '-o', '/app/tmp/output.svg']
-        process = subprocess.Popen(cmd, shell=True, cwd='/app/')
+        cmd = ['./bin/vtracer-linux', '-i', './tmp/input.png', '-o', './tmp/output.svg']
+        process = subprocess.Popen(cmd)
         process.wait()
 
-        with open('/app/tmp/output.svg', 'rb') as f:
+        with open('./tmp/output.svg', 'rb') as f:
             return base64.b64encode(f.read()).decode()
