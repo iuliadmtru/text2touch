@@ -36,6 +36,7 @@ export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImage
   
   const [dataArrived, setDataArrived] = useState(true);
   
+  
   const perspectives = ["front", "lateral"];
   const [perspective, setPerspective] = useState("");
 
@@ -160,7 +161,7 @@ export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImage
                 })
               }
               // console.log(requestBody);
-              fetch(API_URL + "/api/prompts/", requestBody).then(data => data.json()).then(json => {setImages(json.images)});
+              fetch(API_URL + "/api/prompts/", requestBody).then(data => data.json()).then(json => {setImages(json.images); setSelectedIndex(-1)}).catch(error => alert("Invalid key"));
             }}
           >
             Create image
@@ -204,10 +205,10 @@ export const AppBody: React.FunctionComponent<AppBodyProps> = ({images, setImage
                 <CardActionArea
                   onClick={() => {
                     images.map((item, index1) =>
-                      {if (index1 === selectedIndex)
+                      {if (index1 === selectedIndex) {
                         setSelectedIndex(-1)
-                        else
-                      setSelectedIndex(index1)
+                      } else
+                      setSelectedIndex(index)
                       }
                     );
                   }}
