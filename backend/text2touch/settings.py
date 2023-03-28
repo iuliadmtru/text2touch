@@ -156,5 +156,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ###
 
 OPENAI = {
-    'API_KEY': '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',
+    'DALLE2': {
+        'API_KEY': '***************************************************',
+    },
+    'GPT3': {
+        'API_KEY': '********************************',
+        'API_BASE': 'https://azure-openai-hackathon-accessability.openai.azure.com/',
+        'API_TYPE': 'azure',
+        'API_VERSION': '2022-12-01',
+    },
 }

@@ -2,16 +2,17 @@ import base64
 import re
 
 import openai
+from django.conf import settings
 
 
 class GPT3Service:
     @staticmethod
     def generate(prompt, pov):
         # set OpenAI API key
-        openai.api_key = "85e3ba53e7a94f999e0d602b6a1775da"
-        openai.api_base = "https://azure-openai-hackathon-accessability.openai.azure.com/"
-        openai.api_type = 'azure'
-        openai.api_version = '2022-12-01'
+        openai.api_key = settings.OPENAI['GPT3']['API_KEY']
+        openai.api_base = settings.OPENAI['GPT3']['API_BASE']
+        openai.api_type = settings.OPENAI['GPT3']['API_TYPE']
+        openai.api_version = settings.OPENAI['GPT3']['API_VERSION']
 
         # prepare the full prompt
         full_prompt = "I would like you to act as an SVG designer. I will ask you \

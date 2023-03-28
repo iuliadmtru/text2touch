@@ -2,15 +2,14 @@ import base64
 import subprocess
 
 import openai
-
-from text2touch import settings
+from django.conf import settings
 
 
 class DALLE2Service:
     @staticmethod
     def generate(prompt, pov):
         # set OpenAI API key
-        openai.api_key = settings.OPENAI['API_KEY']
+        openai.api_key = settings.OPENAI['DALLE2']['API_KEY']
 
         # call DALL·E 2 to generate images
         response = openai.Image.create(
